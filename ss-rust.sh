@@ -200,7 +200,6 @@ User=root
 Restart=on-failure
 RestartSec=5s
 DynamicUser=true
-ExecStartPre=/bin/sh -c 'ulimit -n 51200'
 ExecStart=/usr/local/bin/ss-rust -c /etc/ss-rust/config.json
 [Install]
 WantedBy=multi-user.target' > /etc/systemd/system/ss-rust.service
