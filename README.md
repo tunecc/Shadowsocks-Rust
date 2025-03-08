@@ -1,7 +1,15 @@
 # 使用
 
+LXC
+
 ```bash
-wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/ss-rust.sh && chmod +x ss-rust.sh && ./ss-rust.sh
+wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/lss.sh && chmod +x ss-rust.sh && ./lss.sh
+```
+
+KVM
+
+```bash
+wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/kss.sh && chmod +x ss-rust.sh && ./kss.sh
 ```
 
 # 修改了什么
@@ -24,3 +32,7 @@ ExecStartPre=/bin/sh -c "ulimit -n 51200"
 
 总结来说，如果你的服务并不会创建大量并发连接或者文件操作，且系统默认的文件描述符数足够使用，那么可以不设置。但如果预期负载较高，建议适当提高限制，以避免潜在的资源不足问题。
 ```
+
+
+
+添加定时重启
