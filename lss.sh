@@ -194,6 +194,7 @@ User=root
 Restart=on-failure
 RestartSec=5s
 DynamicUser=true
+ExecStartPre=/bin/sh -c 'ulimit -n 51200'
 ExecStart=/usr/local/bin/ss-rust -c /etc/ss-rust/config.json
 [Install]
 WantedBy=multi-user.target' > /etc/systemd/system/ss-rust.service
@@ -576,8 +577,10 @@ View(){
 
 Status(){
 	echo -e "${Info} 获取 Shadowsocks Rust 活动日志 ……"
-	echo -e "${Tip} 返回主菜单请按 q ！"
+	echo -e "${Tip} 可以按键盘上的 'q' 退出日志面板。"
 	systemctl status ss-rust
+	echo
+	read -p "按回车键返回主菜单..." temp
 	Start_Menu
 }
 
