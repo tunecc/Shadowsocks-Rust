@@ -3,13 +3,13 @@
 LXC
 
 ```bash
-wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/lss.sh && chmod +x ss-rust.sh && ./lss.sh
+wget -O lss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/lss.sh && chmod +x lss.sh && ./lss.sh
 ```
 
 KVM
 
 ```bash
-wget -O ss-rust.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/kss.sh && chmod +x ss-rust.sh && ./kss.sh
+wget -O kss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/kss.sh && chmod +x kss.sh && ./kss.sh
 ```
 
 # 修改了什么
