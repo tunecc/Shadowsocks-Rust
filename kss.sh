@@ -6,10 +6,9 @@ export PATH
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: Shadowsocks Rust 管理脚本 + 每日定时重启
 #	Author: 翠花 (原作者) & 集成定时重启示例
-#	WebSite: https://about.nange.cn
 #=================================================
 
-sh_ver="1.4.8"
+sh_ver="1.5.0"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
 FOLDER="/etc/ss-rust"
@@ -240,25 +239,32 @@ Read_config(){
 
 Set_port(){
 	while true
-		do
-		echo -e "${Tip} 本步骤不涉及系统防火墙端口操作，请手动放行相应端口！"
-		echo -e "请输入 Shadowsocks Rust 端口 [1-65535]"
-		read -e -p "(默认：2525)：" port
-		[[ -z "${port}" ]] && port="2525"
-		echo $((${port}+0)) &>/dev/null
-		if [[ $? -eq 0 ]]; then
-			if [[ ${port} -ge 1 ]] && [[ ${port} -le 65535 ]]; then
-				echo && echo "=================================="
-				echo -e "端口：${Red_background_prefix} ${port} ${Font_color_suffix}"
-				echo "==================================" && echo
-				break
-			else
-				echo "输入错误, 请输入正确的端口。"
-			fi
-		else
-			echo "输入错误, 请输入正确的端口。"
-		fi
-		done
+	do
+	  echo -e "${Tip} 本步骤不涉及系统防火墙端口操作，请手动放行相应端口！"
+	  echo -e "请输入 Shadowsocks Rust 端口 [1-65535]"
+	  read -e -p "(默认：随机生成)：" port
+	  
+	  if [[ -z "${port}" ]]; then
+	    # 随机生成一个端口(1025~65535之间)，也可以根据需要调整范围
+	    port=$(shuf -i 1025-65535 -n 1)
+	  fi
+	  
+	  # 检查是否为有效数字
+	  echo $((${port}+0)) &>/dev/null
+	  if [[ $? -eq 0 ]]; then
+	    # 检查端口范围
+	    if [[ ${port} -ge 1 ]] && [[ ${port} -le 65535 ]]; then
+	      echo && echo "=================================="
+	      echo -e "端口：${Red_background_prefix} ${port} ${Font_color_suffix}"
+	      echo "==================================" && echo
+	      break
+	    else
+	      echo "输入错误, 请输入正确的端口。"
+	    fi
+	  else
+	    echo "输入错误, 请输入正确的端口。"
+	  fi
+	done
 }
 
 Set_tfo(){
@@ -266,8 +272,8 @@ Set_tfo(){
 ==================================
 ${Green_font_prefix} 1.${Font_color_suffix} 开启  ${Green_font_prefix} 2.${Font_color_suffix} 关闭
 =================================="
-	read -e -p "(默认：1.开启)：" tfo
-	[[ -z "${tfo}" ]] && tfo="1"
+	read -e -p "(默认：2. 关闭)：" tfo
+	[[ -z "${tfo}" ]] && tfo="2"
 	if [[ ${tfo} == "1" ]]; then
 		tfo=true
 		enable_systfo
@@ -295,8 +301,8 @@ Set_password(){
 Set_cipher(){
 	echo -e "请选择 Shadowsocks Rust 加密方式
 ==================================	
- ${Green_font_prefix} 1.${Font_color_suffix} aes-128-gcm ${Green_font_prefix}(默认)${Font_color_suffix}
- ${Green_font_prefix} 2.${Font_color_suffix} aes-256-gcm ${Green_font_prefix}(推荐)${Font_color_suffix}
+ ${Green_font_prefix} 1.${Font_color_suffix} aes-128-gcm ${Green_font_prefix}
+ ${Green_font_prefix} 2.${Font_color_suffix} aes-256-gcm ${Green_font_prefix}
  ${Green_font_prefix} 3.${Font_color_suffix} chacha20-ietf-poly1305 ${Green_font_prefix}${Font_color_suffix}
  ${Green_font_prefix} 4.${Font_color_suffix} plain ${Red_font_prefix}(不推荐)${Font_color_suffix}
  ${Green_font_prefix} 5.${Font_color_suffix} none ${Red_font_prefix}(不推荐)${Font_color_suffix}
@@ -311,12 +317,13 @@ Set_cipher(){
  ${Tip} AEAD 2022 加密（须v1.15.0及以上版本且密码须经过Base64加密）
 ==================================	
  ${Green_font_prefix}13.${Font_color_suffix} 2022-blake3-aes-128-gcm ${Green_font_prefix}(推荐)${Font_color_suffix}
- ${Green_font_prefix}14.${Font_color_suffix} 2022-blake3-aes-256-gcm ${Green_font_prefix}(推荐)${Font_color_suffix}
+ ${Green_font_prefix}14.${Font_color_suffix} 2022-blake3-aes-256-gcm ${Green_font_prefix}(默认)${Font_color_suffix}
  ${Green_font_prefix}15.${Font_color_suffix} 2022-blake3-chacha20-poly1305
  ==================================
  ${Tip} 如需其它加密方式请手动修改配置文件 !" && echo
-	read -e -p "(默认: 1. aes-128-gcm)：" cipher
-	[[ -z "${cipher}" ]] && cipher="1"
+
+	read -e -p "(默认: 14. 2022-blake3-aes-256-gcm)：" cipher
+	[[ -z "${cipher}" ]] && cipher="14"
 	if [[ ${cipher} == "1" ]]; then
 		cipher="aes-128-gcm"
 	elif [[ ${cipher} == "2" ]]; then
@@ -350,6 +357,7 @@ Set_cipher(){
 	else
 		cipher="aes-128-gcm"
 	fi
+
 	echo && echo "=================================="
 	echo -e "加密：${Red_background_prefix} ${cipher} ${Font_color_suffix}"
 	echo "==================================" && echo
@@ -722,4 +730,4 @@ Shadowsocks Rust 管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
 		;;
 	esac
 }
-Start
+Start_Menu
