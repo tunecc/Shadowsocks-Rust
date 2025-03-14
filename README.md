@@ -1,18 +1,28 @@
 # 使用
 
-LXC
+通用（最新会自动判断是否要添加 ExecStartPre=/bin/sh -c "ulimit -n 51200"）
+
+```bash
+wget -O ss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/ss.sh && chmod +x lss.sh && ./ss.sh
+```
+
+~~LXC~~
 
 ```bash
 wget -O lss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/lss.sh && chmod +x lss.sh && ./lss.sh
 ```
 
-KVM
+~~KVM~~
 
 ```bash
 wget -O kss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/kss.sh && chmod +x kss.sh && ./kss.sh
 ```
 
 # 修改了什么
+
+新脚本会自动根据系统架构来判断是否添加 ` ExecStartPre=/bin/sh -c "ulimit -n 51200"`
+
+
 
 我在LXC的服务器上面使用的时候会出错，在看了[Snell一键部署-由jinqians大佬撰写](https://github.com/jinqians/snell.sh)的脚本后发现是
 ```
