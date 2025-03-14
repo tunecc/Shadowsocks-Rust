@@ -3,7 +3,7 @@
 通用（最新会自动判断是否要添加 ExecStartPre=/bin/sh -c "ulimit -n 51200"）
 
 ```bash
-wget -O ss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/ss.sh && chmod +x lss.sh && ./ss.sh
+wget -O ss.sh --no-check-certificate https://raw.githubusercontent.com/tunecc/Shadowsocks-Rust/refs/heads/master/ss.sh && chmod +x ss.sh && ./ss.sh
 ```
 
 ~~LXC~~
