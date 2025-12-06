@@ -1,3 +1,7 @@
+
+
+# 不再维护，请用[这个脚本](https://github.com/tunecc/ss22-ShadowTLS)
+
 # 使用
 
 通用（最新会自动判断是否要添加 ExecStartPre=/bin/sh -c "ulimit -n 51200"）
